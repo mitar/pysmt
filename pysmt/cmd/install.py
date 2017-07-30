@@ -33,7 +33,7 @@ from pysmt import git_version
 Installer = namedtuple("Installer", ["InstallerClass", "version", "extra_params"])
 INSTALLERS = [Installer(MSatInstaller,    "5.3.13", {}),
               Installer(Z3Installer,      "4.4.1", {"osx": "10.11"}),
-              Installer(CVC4Installer,    "1.5-prerelease", {"git_version" : "c15ff43597b41ea457befecb1b0e2402e28cb523"}),
+              Installer(CVC4Installer,    "1.5", {"git_version" : "05663e0d338c2bab30b5f19820de01788ec2b276"}),
               Installer(YicesInstaller,   "2.5.1", {"yicespy_version": "07439670a54d08a76cfb931194e1eaf07ea026a1"}),
               Installer(BtorInstaller,    "2.2.0", {"lingeling_version": "bal"}),
               Installer(PicoSATInstaller, "960", {"pypicosat_minor_version" : "1610040816"}),

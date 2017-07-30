@@ -39,8 +39,8 @@ class CVC4Installer(SolverInstaller):
     def move(self):
         SolverInstaller.mv(os.path.join(self.bin_path, "share/pyshared/CVC4.py"),
                            self.bindings_dir)
-        SolverInstaller.mv(os.path.join(self.bin_path, "lib/pyshared/_CVC4.so"),
-                                        self.bindings_dir)
+        SolverInstaller.mv(os.path.join(self.bin_path, "lib/pyshared/CVC4.so"),
+                           self.bindings_dir)
 
     def compile(self):
         # Prepare the building system
@@ -65,7 +65,7 @@ class CVC4Installer(SolverInstaller):
                             env_variables=pyconfig)
 
         # Fix the paths of the bindings
-        SolverInstaller.run("cp CVC4.so.3.0.0 _CVC4.so",
+        SolverInstaller.run("cp CVC4.so.4.0.0 _CVC4.so",
                             directory=os.path.join(self.bin_path, "lib/pyshared"))
 
     def get_installed_version(self):
