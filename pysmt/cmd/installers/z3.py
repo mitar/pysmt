@@ -25,7 +25,7 @@ class Z3Installer(SolverInstaller):
     SOLVER = "z3"
 
     def __init__(self, install_dir, bindings_dir, solver_version,
-                 mirror_link=None, osx=None):
+                 mirror_link=None, osx=None, git_version=None):
         arch = self.architecture
         if arch == "x86_64":
             arch = "x64"
@@ -38,8 +38,12 @@ class Z3Installer(SolverInstaller):
         elif system == "windows":
             system = "win"
 
-        archive_name = "z3-%s-%s-%s.zip" % (solver_version, arch, system)
-        native_link = "https://github.com/Z3Prover/z3/releases/download/z3-{solver_version}/{archive_name}"
+        # Stable versions template
+        # archive_name = "z3-%s-%s-%s.zip" % (solver_version, arch, system)
+        #
+        # Nightly build template
+        archive_name = "z3-%s.%s-%s-%s.zip" % (solver_version, git_version, arch, system)
+        native_link = "https://github.com/pysmt/Z3bin/blob/master/nightly/{archive_name}?raw=true"
 
         SolverInstaller.__init__(self, install_dir=install_dir,
                                  bindings_dir=bindings_dir,
