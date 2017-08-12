@@ -41,6 +41,36 @@ def TemporaryPath(path):
         sys.path = old_path
 
 
+def delete_module(modname, paranoid=None):
+    from sys import modules
+    try:
+        thismod = modules[modname]
+    except KeyError:
+        raise ValueError(modname)
+    these_symbols = dir(thismod)
+    if paranoid:
+        try:
+            paranoid[:]  # sequence support
+        except:
+            raise ValueError('must supply a finite list for paranoid')
+        else:
+            these_symbols = paranoid[:]
+    del modules[modname]
+    for mod in modules.values():
+        try:
+            delattr(mod, modname)
+        except AttributeError:
+            pass
+        if paranoid:
+            for symbol in these_symbols:
+                if symbol[:2] == '__':  # ignore special symbols
+                    continue
+                try:
+                    delattr(mod, symbol)
+                except AttributeError:
+                    pass
+
+
 class SolverInstaller(object):
 
     SOLVER = None
@@ -92,9 +122,9 @@ class SolverInstaller(object):
 
     def download_links(self):
         if self.mirror_link is not None:
-            yield self.mirror_link.format(archive_name=self.archive_name)
+            yield self.mirror_link.format(archive_name=self.archive_name, solver_version=self.solver_version)
         if self.native_link is not None:
-            yield self.native_link.format(archive_name=self.archive_name)
+            yield self.native_link.format(archive_name=self.archive_name, solver_version=self.solver_version)
 
     def download(self):
         """Downloads the archive from one of the mirrors"""
